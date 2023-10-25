@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gymmax
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gymmax
+  template:
+    metadata:
+      labels:
+        app: gymmax
+    spec:
+      containers:
+      - name: gymmax
+        image: mylandmax/kubwebtest:v3
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+          # 1000 milicore = 1 core. 1 node has 1 core.
+          # For that reason, 5 pods with 250 milicore isn't possible on 1 node. The pod remains pending. 
+            cpu: "250m"
